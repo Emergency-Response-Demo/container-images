@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.6
+FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift:1.8
 
 ADD ./contrib/run /usr/local/s2i/run
 
