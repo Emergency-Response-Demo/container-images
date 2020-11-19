@@ -1,6 +1,6 @@
-FROM registry.redhat.io/amq7/amq-streams-kafka-24-rhel7:1.4.0
+FROM registry.redhat.io/amq7/amq-streams-kafka-25-rhel7:1.5.0
 
-ENV DEBEZIUM_VERSION=1.1.2.Final
+ENV DEBEZIUM_VERSION=1.3.1.Final
 
 USER root:root
 
