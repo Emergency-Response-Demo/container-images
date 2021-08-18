@@ -1,17 +1,24 @@
-### ubi8-java11-mvn
+## Overview
 
-Adds runtime maven support as required by RHPAM applications.
-Runtime image for Emergency Response Demo Process Service
+Adds runtime maven support as required by some RHPAM applications.
 
-In particular, sets mirror configs in /m2/settings.xml to pull from nexus.
-This becomes critical to support kie-scanner to dynamically pull kjars (with rules) from nexus.
-
-NOTE: If using S2I to build a target container image, base UBI containers are capable of customizing the maven settings.xml .  However, the Jenkins pipelines of ER-Demo (to include the pipeline for the process server, do not use s2i.  Instead, a "binary build" approach is utilized;  ie:  oc start-build helloBuild --follow --from-file=./target/hello.war.  Subsequently, the target container instantiated from this image will create a custom /m2/settings.xml.
-
-NOTE: /m2/settings.xml is read when the following system property is set:  kie.maven.settings.custom=/m2/settings.xml
+Used by the Emergency Response Demo's *Process Service*
 
 
-#### Build and Push
+## Details
+In particular, this image sets *mirror* related configurations in /m2/settings.xml to pull from a nexus.
+This becomes critical to support the RH-PAM kie-scanner to dynamically pull kjars (with rules) from that nexus.
+
+NOTE: /m2/settings.xml is read when the following system property is set in the runtime container:  kie.maven.settings.custom=/m2/settings.xml
+
+#### Why not just set *mirror* configs via S2I ?
+
+OpenShift's S2I functionality is capable of customizing the maven settings.xml.
+
+However, the Jenkins pipelines of ER-Demo (to include the pipeline for the process server) do not use s2i.  Instead, a "binary build" approach is utilized;  ie:  oc start-build helloBuild --follow --from-file=./target/hello.war.  Subsequently, the target container instantiated from this image will create a custom /m2/settings.xml.
+
+
+### Build and Push
 
 1) $ buildah bud -f Dockerfile -t quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.2 .
 2) $ podman push quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.2 
