@@ -1,7 +1,10 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.1
+# Build:  buildah bud -f ubi8-java11/Dockerfile -t quay.io/emergencyresponsedemo/ubi8-java11:8.3 .
+# Push:   podman push quay.io/emergencyresponsedemo:8.3
+
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.3
 
 ARG JAVA_PACKAGE=java-11-openjdk-headless
-ARG RUN_JAVA_VERSION=1.3.5
+ARG RUN_JAVA_VERSION=1.3.8
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
@@ -19,7 +22,11 @@ RUN microdnf install openssl curl ca-certificates ${JAVA_PACKAGE} \
     && chmod 540 /deployments/run-java.sh \
     && echo "securerandom.source=file:/dev/urandom" >> /etc/alternatives/jre/lib/security/java.security
 
+# Configure the JAVA_OPTIONS, you can add -XshowSettings:vm to also display the heap size.
+ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+
 EXPOSE 8080
 USER 1001
 
+# https://github.com/fabric8io-images/run-java-sh/blob/master/fish-pepper/run-java-sh/readme.md
 ENTRYPOINT [ "/deployments/run-java.sh" ]

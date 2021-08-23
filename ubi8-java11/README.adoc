@@ -1,0 +1,17 @@
+= ubi8-java11
+
+Image derived from `registry.access.redhat.com/ubi8/ubi-minimal:8.3` with Java 11 JRE.
+
+Runtime image for Java workloads.
+
+For Dockerfiles of quarkus based apps that inherit from this one, typically include the following in that child Dockerfile:
+
+-----
+COPY --chown=1001 target/quarkus-app/lib/ /deployments/lib/
+COPY --chown=1001 target/quarkus-app/*.jar /deployments/
+COPY --chown=1001 target/quarkus-app/app/ /deployments/app/
+COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
+-----
+
+
+There four distinct layers so if there are application changes the library layers can be re-used
