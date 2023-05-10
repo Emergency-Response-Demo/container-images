@@ -36,5 +36,5 @@ However, the Jenkins pipelines of ER-Demo (to include the pipeline for the proce
 
 == Build and Push
 
-. $ buildah bud -f Dockerfile -t quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.2 .
-. $ podman push quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.2 
+. $ buildah bud -f Dockerfile -t quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.3 .
+. $ podman push quay.io/emergencyresponsedemo/ubi8-jdk-11-mvn:0.0.3 
